@@ -1,5 +1,8 @@
 package json;
 
+import data.Database;
+import data.Idea;
+import data.Person;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -81,7 +84,10 @@ public class Parser {
         return ret;
     }
     public String createSubList(String toCreate, ArrayList<ArrayList<String>> content){
-        String ret="";
+        String ret = "";
+        if (toCreate.length() !=0){
+            ret = "\"" + toCreate + "\": {";
+        }
         for (int i= 0;i<content.size(); i++){
             if (i!=0) {
                 ret += ",";
@@ -94,6 +100,72 @@ public class Parser {
                 }
             }
         }
+        if (toCreate.length() != 0) ret+="}";
+        return ret;
+    }
+
+    public String createData(Database d){
+        return "\"data\": {"+d.toJSON(this)+"}";
+    }
+
+    public String createStatus(String status){
+        return "\"status: \""+status+"\",";
+    }
+
+    public String createError(ArrayList<String> error){
+        ArrayList<ArrayList <String>> tmp = new ArrayList<>();
+        ArrayList<String> tmp2 = new ArrayList<>();
+        for (String s : error){
+            tmp2.add(create("message", s));
+            tmp.add(tmp2);
+            tmp2 = new ArrayList<>();
+        }
+        return createList("errors", tmp)+",";
+    }
+
+    public String createPeople(ArrayList<Person> persons){
+        ArrayList<ArrayList <String>> tmp = new ArrayList<>();
+        ArrayList<String> tmp2 = new ArrayList<>();
+        for (Person p : persons){
+            tmp2.add(p.toJSON(this, ""));
+            tmp.add(tmp2);
+            tmp2 = new ArrayList<>();
+        }
+        return createList("people", tmp);
+    }
+
+    public String createResponseInterest(String status, ArrayList<String> errors, ArrayList<Person> persons){
+        String ret = "{";
+        ret+=createStatus(status);
+        ret+=createError(errors);
+        ret+="\"data\": {"+createPeople(persons)+"}";
+        ret+="}";
+        return ret;
+    }
+    public String createResponseJoin(String status, ArrayList<String> errors){
+        String ret = "{";
+        ret+=createStatus(status);
+        ret+=createError(errors);
+        ret+="\"data\": {}";
+        ret+="}";
+        return ret;
+    }
+
+    public String createResponseAdd(Idea i, String status, ArrayList<String> errors){
+        String ret = "{";
+        ret+=createStatus(status);
+        ret+=createError(errors);
+        ret+="\"data\": {"+i.toJSON(this, "project")+"}";
+        ret+="}";
+        return ret;
+    }
+
+    String createResponseList(String status, Database d, ArrayList<String> errors){
+        String ret = "{";
+        ret+=createStatus(status);
+        ret+=createError(errors);
+        ret+="\"data\": {"+d.toJSON(this)+"}";
+        ret+="}";
         return ret;
     }
 }

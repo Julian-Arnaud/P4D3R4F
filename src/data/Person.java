@@ -28,9 +28,9 @@ public class Person {
     public String toJSON(Parser p, String attribut){
         ArrayList<ArrayList<String>> tmp = new ArrayList<>();
         ArrayList<String> tmp2 = new ArrayList<>();
-        tmp2.add(p.create("name", name));
+        tmp2.add(p.create("username", name));
         tmp2.add(p.create("mail", mail));
         tmp.add(tmp2);
-        return p.createList(attribut, tmp );
+        return p.createSubList(attribut, tmp );
     }
 }
