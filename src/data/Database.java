@@ -1,6 +1,7 @@
 package data;
 
-import java.lang.reflect.Array;
+import json.Parser;
+
 import java.util.ArrayList;
 
 /**
@@ -31,8 +32,19 @@ public class Database {
         getIdea(id).interest(name, mail);
     }
 
-    public void addIdea(String description, String technology, String name, String mail){
-        idea.add(new Idea(description, technology, name, mail, id));
+    public void addIdea(String description, String technology, String username, String mail, String name){
+        idea.add(new Idea(description, technology, username, mail, id, name));
         id++;
+    }
+
+    public String toJSON(Parser p){
+        ArrayList<ArrayList<String>> tmp = new ArrayList<>();
+        ArrayList<String> tmp2 = new ArrayList<>();
+        for (Idea i : idea){
+            tmp2.add(i.toJSON(p, ""));
+            tmp.add(tmp2);
+            tmp2 = new ArrayList<>();
+        }
+        return p.createList("projects", tmp);
     }
 }
