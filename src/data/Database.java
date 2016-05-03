@@ -47,4 +47,6 @@ public class Database {
         }
         return p.createList("projects", tmp);
     }
+
+    public int getLastIdeaID(){return id-1;}
 }

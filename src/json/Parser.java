@@ -42,9 +42,38 @@ public class Parser {
         }catch (JSONException ignored){}
         return "";
     }
+
     public String get(String toGet){
         try{
             return JSON.getJSONObject("data").getString(toGet);
+        }catch (JSONException ignored){}
+        return "";
+    }
+
+    public String getAuthorUsername(){
+        try{
+            return JSON.getJSONObject("data").getJSONObject("owner").getString("username");
+        }catch (JSONException ignored){}
+        return "";
+    }
+
+    public String getAuthorMail(){
+        try{
+            return JSON.getJSONObject("data").getJSONObject("owner").getString("mail");
+        }catch (JSONException ignored){}
+        return "";
+    }
+
+    public String getJoinUsername(){
+        try{
+            return JSON.getString("username");
+        }catch (JSONException ignored){}
+        return "";
+    }
+
+    public String getJoinMail(){
+        try{
+            return JSON.getString("mail");
         }catch (JSONException ignored){}
         return "";
     }
@@ -109,7 +138,7 @@ public class Parser {
     }
 
     public String createStatus(String status){
-        return "\"status: \""+status+"\",";
+        return "\"status: \""+status+"\", ";
     }
 
     public String createError(ArrayList<String> error){
@@ -120,7 +149,7 @@ public class Parser {
             tmp.add(tmp2);
             tmp2 = new ArrayList<>();
         }
-        return createList("errors", tmp)+",";
+        return createList("errors", tmp)+", ";
     }
 
     public String createPeople(ArrayList<Person> persons){
@@ -160,7 +189,7 @@ public class Parser {
         return ret;
     }
 
-    String createResponseList(String status, Database d, ArrayList<String> errors){
+    public String createResponseList(String status, Database d, ArrayList<String> errors){
         String ret = "{";
         ret+=createStatus(status);
         ret+=createError(errors);

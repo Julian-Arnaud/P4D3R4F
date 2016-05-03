@@ -24,6 +24,10 @@ public class Idea {
         this.id = id;
     }
 
+    public void join(String username, String email){
+        person.add(new Person(username, email));
+    }
+
     public String getDescription() {
         return description;
     }
