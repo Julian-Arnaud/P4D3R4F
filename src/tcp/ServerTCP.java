@@ -22,14 +22,13 @@ public class ServerTCP {
         Socket client = null;
         BufferedReader in = null;
         BufferedWriter out = null;
-
-        ActionClientSide actionClientSide = new ActionClientSide();
         //actionClientSide.start();
 
 
         //clientTCP.receive();
 
         try{
+            ActionClientSide actionClientSide = new ActionClientSide();
             serv = new ServerSocket(7777);
             ClientTCP clientTCP = new ClientTCP(actionClientSide.getMsg(), "0.0.0.0", 7777);
 
@@ -41,13 +40,19 @@ public class ServerTCP {
 
             String clAd = client.getInetAddress().toString();
             String line = "";
-            while((line = in.readLine()) != null){
-                System.out.println(line);
+
+            while(true){
+                actionClientSide = new ActionClientSide();
+                actionClientSide.start();
+                line = in.readLine();
+                System.out.println("Line  :"+line);
                 JSONObject data = new JSONObject(line);
                 p = new Parser(line);
                 String ret="";
+                System.out.println(p.getAction());
                 switch (p.getAction()){
                     case "ADD" :
+                        System.out.println("In the add");
                         d.addIdea(p.get("description"), p.get("technology"), p.get("name"), p.getAuthorUsername(), p.getAuthorMail());
                         ret = p.createResponseAdd(d.getIdea(d.getLastIdeaID()), "OK", errors);
                         break;
@@ -75,11 +80,12 @@ public class ServerTCP {
                         break;
                 }
                 out.write(ret);
+                System.out.println("Retour : "+ret);
             }
-            in.close();
+            /*in.close();
             out.close();
             client.close();
-            serv.close();
+            serv.close();*/
         }catch(Exception e){
             e.printStackTrace();
         }
