@@ -1,6 +1,7 @@
 package tcp;
 
 import data.Database;
+import json.ActionClientSide;
 import json.Parser;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -22,18 +23,28 @@ public class ServerTCP {
         BufferedReader in = null;
         BufferedWriter out = null;
 
+        ActionClientSide actionClientSide = new ActionClientSide();
+        //actionClientSide.start();
+
+
+        //clientTCP.receive();
 
         try{
             serv = new ServerSocket(7777);
+            ClientTCP clientTCP = new ClientTCP(actionClientSide.getMsg(), "0.0.0.0", 7777);
+
+            clientTCP.send();
             client = serv.accept();
-            Thread t = new Thread((Runnable) client);
+            //Thread t = new Thread((Runnable) client);
             out = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
             String clAd = client.getInetAddress().toString();
-            while(in.readLine() != null){
-                JSONObject data = new JSONObject(in.readLine());
-                p = new Parser(in.readLine());
+            String line = "";
+            while((line = in.readLine()) != null){
+                System.out.println(line);
+                JSONObject data = new JSONObject(line);
+                p = new Parser(line);
                 String ret="";
                 switch (p.getAction()){
                     case "ADD" :
