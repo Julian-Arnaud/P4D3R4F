@@ -167,7 +167,11 @@ public class Parser {
         String ret = "{";
         ret+=createStatus(status);
         ret+=createError(errors);
-        ret+="\"data\": {"+createPeople(persons)+"}";
+        if (errors.size() != 0) {
+            ret += "\"data\": {" + createPeople(persons) + "}";
+        }else{
+            ret += "\"data\": {}";
+        }
         ret+="}";
         return ret;
     }
@@ -184,7 +188,11 @@ public class Parser {
         String ret = "{";
         ret+=createStatus(status);
         ret+=createError(errors);
-        ret+="\"data\": {"+i.toJSON(this, "project")+"}";
+        if (errors.size() !=0) {
+            ret += "\"data\": {" + i.toJSON(this, "project") + "}";
+        }else{
+            ret+="\"data\": { }";
+        }
         ret+="}";
         return ret;
     }

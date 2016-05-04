@@ -41,14 +41,26 @@ public class ServerTCP {
                         ret = p.createResponseAdd(d.getIdea(d.getLastIdeaID()), "OK", errors);
                         break;
                     case "INTEREST" :
-                        ret = p.createResponseInterest("OK", errors,d.getInterested(Integer.parseInt( p.getId())));
+                        if (Integer.parseInt( p.getId()) > d.getLastIdeaID()   || Integer.parseInt( p.getId()) < 0){
+                            errors.add("Wrong idea id");
+                            ret = p.createResponseInterest("KO", errors, d.getInterested(Integer.parseInt( p.getId())));
+                            errors = new ArrayList<>();
+                        }else {
+                            ret = p.createResponseInterest("OK", errors, d.getInterested(Integer.parseInt(p.getId())));
+                        }
                         break;
                     case "LIST" :
                         ret = p.createResponseList("OK", d, errors);
                         break;
                     case "JOIN" :
-                        d.getIdea(Integer.parseInt(p.getId())).join(p.getJoinUsername(), p.getJoinMail());
-                        ret = p.createResponseJoin("OK", errors);
+                        if (Integer.parseInt( p.getId()) > d.getLastIdeaID()   || Integer.parseInt( p.getId()) < 0){
+                            errors.add("Wrong idea id");
+                            ret+= p.createResponseJoin("KO", errors);
+                            errors = new ArrayList<>();
+                        }else {
+                            d.getIdea(Integer.parseInt(p.getId())).join(p.getJoinUsername(), p.getJoinMail());
+                            ret = p.createResponseJoin("OK", errors);
+                        }
                         break;
                 }
                 out.write(ret);
