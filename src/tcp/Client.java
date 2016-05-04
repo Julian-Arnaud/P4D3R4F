@@ -3,10 +3,7 @@ package tcp;
 /**
  * Created by guillaume on 04/05/16.
  */
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -24,6 +21,9 @@ public class Client
         {
             _port   = (args.length == 1) ? Integer.parseInt(args[0]) : 8080;
             _socket = new Socket((String) null, _port);
+
+            ObjectOutputStream out = new ObjectOutputStream(_socket.getOutputStream());
+            out.write("hello".getBytes());
 
             // Open stream
             input = _socket.getInputStream();

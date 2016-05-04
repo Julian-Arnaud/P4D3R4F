@@ -11,8 +11,10 @@ public class Person {
 
     private String name;
     private String mail;
-
+    private static int id = 0;
+    private int persId;
     public Person (String name, String mail){
+        this.persId = id++;
         this.name = name;
         this.mail = mail;
     }
@@ -28,6 +30,7 @@ public class Person {
     public String toJSON(Parser p, String attribut){
         ArrayList<ArrayList<String>> tmp = new ArrayList<>();
         ArrayList<String> tmp2 = new ArrayList<>();
+        tmp2.add(p.createId(id));
         tmp2.add(p.create("username", name));
         tmp2.add(p.create("mail", mail));
         tmp.add(tmp2);

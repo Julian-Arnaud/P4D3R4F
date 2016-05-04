@@ -138,7 +138,7 @@ public class Parser {
     }
 
     public String createStatus(String status){
-        return "\"status: \""+status+"\", ";
+        return "\"status\": \""+status+"\", ";
     }
 
     public String createError(ArrayList<String> error){
@@ -188,10 +188,10 @@ public class Parser {
         String ret = "{";
         ret+=createStatus(status);
         ret+=createError(errors);
-        if (errors.size() !=0) {
+        if (errors.size() ==0) {
             ret += "\"data\": {" + i.toJSON(this, "project") + "}";
         }else{
-            ret+="\"data\": { }";
+            ret+="\"data\": {}";
         }
         ret+="}";
         return ret;
