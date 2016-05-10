@@ -14,15 +14,32 @@ import java.util.ArrayList;
  **/
 public class ResponseClientSide {
     JSONObject jsonObject;
+    String action;
     ArrayList<Project> projects;
     ArrayList<Person> persons;
 
 
-    public ResponseClientSide(String json){
+    public ResponseClientSide(String json, String action){
+        this.action = action;
         try {
             this.jsonObject = new JSONObject(json);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+
+        start(action);
+    }
+
+    public void start(String action){
+        if(action.equals("add")){
+            decodeAdd();
+        }else if(action.equals("list")){
+            decodeList();
+        }else if(action.equals("join")){
+            decodeJoin();
+        }
+        else {
+            decodeInterest();
         }
     }
 

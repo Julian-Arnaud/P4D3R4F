@@ -13,7 +13,7 @@ public class ActionClientSide {
     private String action;
     private String username;
     private String mail;
-    private int id;
+    private String id;
     private String technology;
     private String description;
     private String name;
@@ -21,7 +21,7 @@ public class ActionClientSide {
     private String msg;
 
     public ActionClientSide(){
-        start();
+
     }
 
     public void start(){
@@ -57,12 +57,10 @@ public class ActionClientSide {
         System.out.println("Saisir email");
         this.mail = in.next();
 
-        this.msg = "{\"action\":\"ADD\", \"data\":{\"id\":\"null\", \"name\":\""+name
+        this.msg = "{\"action\":\"ADD\", \"data\":{\"id\":0, \"name\":\""+name
                 +"\",\"description\":\""+description
                 +"\",\"technology\":\""+technology
-                +"\",\"username\":\""+username+
-                "\",\"mail\":\""+mail
-                +"\"}}";
+                +"\",\"owner\":{\"id\":0, \"username\":\""+username+"\", \"mail\":\""+mail+"\"}}}";
         System.out.println(msg);
     }
 
@@ -79,24 +77,28 @@ public class ActionClientSide {
         System.out.println("Saisir email");
         this.mail = in.next();
         System.out.println("Saisir id projet");
-        this.id = in.nextInt();
+        this.id = in.next();
 
         this.msg = "{\"action\":\"JOIN\", \"data\":{\"id\":\""+id
-                +"\", \"username\":\""+username
+                +"\", \"person\":{\"username\":\""+username
                 +"\",\"mail\":\""+mail
-                +"\"}}";
+                +"\"}}}";
     }
 
     public void interest(){
         this.action = "interest";
         Scanner in = new Scanner(System.in);
         System.out.println("Saisir id projet");
-        this.id = in.nextInt();
+        this.id = in.next();
 
         this.msg = "{\"action\":\"INTEREST\",\"data\":{\"id\":\""+id+"\"}}";
     }
 
     public String getMsg(){
         return msg;
+    }
+
+    public String getAction(){
+        return action;
     }
 }

@@ -1,5 +1,9 @@
 package tcp;
 
+import json.ActionClientSide;
+import json.ResponseClientSide;
+import org.json.JSONObject;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -25,11 +29,19 @@ public class ClientTCP implements Runnable {
         try {
             Socket s = new Socket(host, port);
 
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+            out.writeUTF(msgSend);
 
-            out.write(msgSend);
+            BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
+            msgRec = in.readLine();
+            System.out.println(msgRec);
+
+            JSONObject getAction = new JSONObject(msgSend);
+
+            ResponseClientSide responseClientSide = new ResponseClientSide(msgRec, getAction.getString("action"));
             out.close();
+
             s.close();
         } catch (IOException e) {
             e.printStackTrace();
