@@ -1,5 +1,7 @@
 package rmi;
 
+import data.Database;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -8,7 +10,9 @@ import java.rmi.server.UnicastRemoteObject;
  * @author Alain Defrance
  */
 public class Server {
+    public static Database d;
     public static void main(String[] argv) {
+        d = new Database();
         try {
             // 10000 est le port sur lequel sera publié le service. Nous devons le préciser à la fois sur le registry et à la fois à la création du stub.
             AddInterface skeleton = (AddInterface) UnicastRemoteObject.exportObject(new AddImpl(), 10000); // Génère un stub vers notre service.

@@ -24,7 +24,7 @@ public class Server
         ArrayList<String> errors = new ArrayList<>();
         try
         {
-            _port   = (args.length == 1) ? Integer.parseInt(args[0]) : 8050;
+            _port   = (args.length == 1) ? Integer.parseInt(args[0]) : 8040;
             _socket = new ServerSocket(_port);
 
             System.out.println("TCP server is running on " + _port + "...");
@@ -46,7 +46,7 @@ public class Server
                     e.printStackTrace();
                 }
                 Parser p = new Parser(response);
-                System.out.println(p.getAction());
+                System.out.println("Recu : "+p.getAction());
 
                 String ret="";
                 switch (p.getAction()){
@@ -80,7 +80,7 @@ public class Server
 
                 errors = new ArrayList<>();
                 // Write the message and close the connection
-                System.out.println("Ret : "+ret);
+                System.out.println("Envoyé : "+ret);
                 output.writeUTF(ret);
                 output.write('\0');
                 output.flush();

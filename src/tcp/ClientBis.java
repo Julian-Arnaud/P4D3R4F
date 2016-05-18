@@ -33,13 +33,12 @@ public class ClientBis implements Runnable {
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
             out.writeUTF(msgSend);
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            DataInputStream in = new DataInputStream(s.getInputStream());
 
-            msgRec = in.readLine();
-            System.out.println(msgRec);
+            msgRec = in.readUTF();
+            System.out.println("Recu : "+msgRec);
 
             JSONObject getAction = new JSONObject(msgSend);
-
             ResponseClientSide responseClientSide = new ResponseClientSide(msgRec, getAction.getString("action"));
             out.close();
 

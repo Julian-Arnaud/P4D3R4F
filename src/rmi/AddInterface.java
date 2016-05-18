@@ -7,5 +7,5 @@ import java.rmi.RemoteException;
  * @author Alain Defrance
  */
 public interface AddInterface extends Remote {
-    public Integer add(Integer nb1, Integer nb2) throws RemoteException;
+    public Integer add(String description, String technology, String name, String mail, String username) throws RemoteException;
 }
