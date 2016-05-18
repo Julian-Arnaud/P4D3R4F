@@ -1,4 +1,5 @@
 import json.ActionClientSide;
+import tcp.ClientBis;
 import tcp.ClientTCP;
 import tcp.ServerTCP;
 
@@ -11,7 +12,7 @@ public class Main {
         ActionClientSide actionClientSide = new ActionClientSide();
         actionClientSide.start();
 
-        ClientTCP client = new ClientTCP(actionClientSide.getMsg(), "10.212.103.98", 9090);
+        ClientBis client = new ClientBis(actionClientSide.getMsg(), "10.212.103.98", 9090);
 
         client.send();
     }

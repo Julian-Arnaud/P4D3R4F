@@ -12,14 +12,14 @@ import java.net.Socket;
  * @author Julian ARNAUD
  * @date 26/04/2016
  **/
-public class ClientTCP implements Runnable {
+public class ClientBis implements Runnable {
 
     private String msgSend;
     private String msgRec;
     private String host;
     private int port;
 
-    public ClientTCP(String msg, String host, int port){
+    public ClientBis(String msg, String host, int port){
         this.msgSend = msg;
         this.msgRec = "";
         this.host = host;

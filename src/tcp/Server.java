@@ -24,7 +24,7 @@ public class Server
         ArrayList<String> errors = new ArrayList<>();
         try
         {
-            _port   = (args.length == 1) ? Integer.parseInt(args[0]) : 8080;
+            _port   = (args.length == 1) ? Integer.parseInt(args[0]) : 8050;
             _socket = new ServerSocket(_port);
 
             System.out.println("TCP server is running on " + _port + "...");
