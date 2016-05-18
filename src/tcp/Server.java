@@ -14,6 +14,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import static java.lang.System.exit;
+
 public class Server
 {
     private static String        _message = "Hello I'm your server.";
@@ -48,7 +50,12 @@ public class Server
                 Parser p = new Parser(response);
                 System.out.println("Recu : "+response);
                 String ret="";
-                switch (p.getAction()){
+                switch (p.getAction().toUpperCase()){
+                    case "CLOSE" :
+                        output.writeUTF("{\"status\": \"OK\", \"errors\": [], \"data;\": {}");
+                        _socket.close();
+                        exit(0);
+                        break;
                     case "ADD" :
                         d.addIdea(p.get("description"), p.get("technology"), p.get("name"), p.getAuthorUsername(), p.getAuthorMail());
                         ret = p.createResponseAdd(d.getIdea(d.getLastIdeaID()), "OK", errors);
@@ -83,7 +90,6 @@ public class Server
                 output.writeUTF(ret);
                 output.write('\0');
                 output.flush();
-                client.close();
             }
         }
         catch (IOException e)
@@ -92,14 +98,6 @@ public class Server
         }
         finally
         {
-            try
-            {
-                _socket.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
         }
     }
 }

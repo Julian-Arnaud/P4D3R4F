@@ -18,8 +18,10 @@ public class ClientBis implements Runnable {
     private String msgRec;
     private String host;
     private int port;
+    private Socket s;
 
-    public ClientBis(String msg, String host, int port){
+    public ClientBis(String msg, String host, int port) throws IOException {
+        s = new Socket(host, port);
         this.msgSend = msg;
         this.msgRec = "";
         this.host = host;
@@ -28,26 +30,20 @@ public class ClientBis implements Runnable {
 
     public void send(){
         try {
-            Socket s = new Socket(host, port);
 
-            DataOutputStream out = new DataOutputStream(s.getOutputStream());
-            out.writeUTF(msgSend);
+                DataOutputStream out = new DataOutputStream(s.getOutputStream());
+                out.writeUTF(msgSend);
 
-            DataInputStream in = new DataInputStream(s.getInputStream());
+                DataInputStream in = new DataInputStream(s.getInputStream());
 
-            msgRec = in.readUTF();
-            System.out.println("Recu : "+msgRec);
+                msgRec = in.readUTF();
+                System.out.println("Recu : " + msgRec);
+                out.close();
 
-            JSONObject getAction = new JSONObject(msgSend);
-            ResponseClientSide responseClientSide = new ResponseClientSide(msgRec, getAction.getString("action"));
-            out.close();
-
-            s.close();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+
     }
 
     public void receive(){
