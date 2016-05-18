@@ -4,6 +4,7 @@ package tcp;
  * Created by guillaume on 04/05/16.
  */
 import data.Database;
+import data.Person;
 import json.Parser;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +25,7 @@ public class Server
         ArrayList<String> errors = new ArrayList<>();
         try
         {
-            _port   = (args.length == 1) ? Integer.parseInt(args[0]) : 8050;
+            _port   = (args.length == 1) ? Integer.parseInt(args[0]) : 8040;
             _socket = new ServerSocket(_port);
 
             System.out.println("TCP server is running on " + _port + "...");
@@ -36,18 +37,16 @@ public class Server
                 InputStream input = client.getInputStream();
 
                 String response = new DataInputStream(input).readUTF();
-                System.out.println(response);
                 // Open output stream
                 DataOutputStream output = new DataOutputStream(client.getOutputStream());
-                System.out.println("New client, address " + client.getInetAddress() + " on " + client.getPort() + ".");
+                System.out.println("\nNew client, address " + client.getInetAddress() + " on " + client.getPort() + ".");
                 try {
                     JSONObject data = new JSONObject(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Parser p = new Parser(response);
-                System.out.println(p.getAction());
-
+                System.out.println("Recu : "+response);
                 String ret="";
                 switch (p.getAction()){
                     case "ADD" :
@@ -57,7 +56,7 @@ public class Server
                     case "INTEREST" :
                         if (Integer.parseInt( p.getId()) > d.getLastIdeaID()   || Integer.parseInt( p.getId()) < 0){
                             errors.add("Wrong idea id");
-                            ret = p.createResponseInterest("KO", errors, d.getInterested(Integer.parseInt( p.getId())));
+                            ret = p.createResponseInterest("KO", errors, new ArrayList<Person>());
                             errors = new ArrayList<>();
                         }else {
                             ret = p.createResponseInterest("OK", errors, d.getInterested(Integer.parseInt(p.getId())));
@@ -80,7 +79,7 @@ public class Server
 
                 errors = new ArrayList<>();
                 // Write the message and close the connection
-                System.out.println("Ret : "+ret);
+                System.out.println("Envoyé : "+ret);
                 output.writeUTF(ret);
                 output.write('\0');
                 output.flush();

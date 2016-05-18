@@ -11,7 +11,7 @@ public class Client {
         try {
             Registry registry = LocateRegistry.getRegistry(10000);
             AddInterface stub = (AddInterface) registry.lookup("Add");
-            System.out.println(stub.add(1, 2)); // Affiche 3
+            System.out.println(stub.add("Description", "Technology", "Name", "Mail", "Username")); // Affiche 3
         } catch (Exception e) {
             e.printStackTrace();
         }
