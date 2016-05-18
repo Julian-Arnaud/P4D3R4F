@@ -69,9 +69,11 @@ public class ResponseClientSide {
                     proj.setId(tmp.getInt("id"));
                     proj.setDescription(tmp.getString("description"));
                     proj.setTechnology(tmp.getString("technology"));
-                    proj.setUsername(tmp.getString("username"));
-                    proj.setMail(tmp.getString("mail"));
                     proj.setName(tmp.getString("name"));
+
+                    JSONObject owner = tmp.getJSONObject("owner");
+                    proj.setUsername(owner.getString("username"));
+                    proj.setMail(owner.getString("mail"));
 
                     projects.add(proj);
                 }
@@ -94,7 +96,7 @@ public class ResponseClientSide {
     public void decodeInterest(){
         try {
             if(jsonObject.getString("status").equals("OK")){
-                JSONArray arrayPersons = new JSONArray(jsonObject.getJSONArray("people"));
+                JSONArray arrayPersons = new JSONArray(jsonObject.getJSONArray("owner"));
                 for(int i = 0; i < arrayPersons.length(); ++i){
                     JSONObject tmp = arrayPersons.getJSONObject(i);
                     Person pers = new Person(tmp.getString("username"), tmp.getString("mail"));
