@@ -47,12 +47,16 @@ public class ResponseClientSide {
         try {
             if(jsonObject.getString("status").equals("OK")){
                 Project project = new Project();
-                project.setId(jsonObject.getInt("id"));
-                project.setTechnology(jsonObject.getString("technology"));
-                project.setDescription(jsonObject.getString("description"));
-                project.setName(jsonObject.getString("name"));
-                project.setMail(jsonObject.getString("mail"));
-                project.setUsername(jsonObject.getString("mail"));
+                JSONObject tmp = new JSONObject(jsonObject.getJSONObject("project"));
+                project.setId(tmp.getInt("id"));
+                project.setTechnology(tmp.getString("technology"));
+                project.setDescription(tmp.getString("description"));
+                project.setName(tmp.getString("name"));
+
+                JSONObject owner = new JSONObject(tmp.getJSONObject("owner"));
+
+                project.setMail(owner.getString("mail"));
+                project.setUsername(owner.getString("username"));
             }
         } catch (JSONException e) {
             e.printStackTrace();
