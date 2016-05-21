@@ -1,5 +1,8 @@
 package rmi;
 
+import rmi.exception.InvalidStateException;
+import rmi.exception.RMIInvocationException;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Proxy;
@@ -9,10 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-/**
- * @author Alain Defrance
- */
 public class Registry {
     private Map<String, Object> services = new HashMap<String, Object>();
     private Socket server;

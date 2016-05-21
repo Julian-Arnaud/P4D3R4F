@@ -1,8 +1,5 @@
-package rmi;
+package rmi.exception;
 
-/**
- * @author Alain Defrance
- */
 public class RMIInvocationException extends RuntimeException {
     public RMIInvocationException() {
         super();

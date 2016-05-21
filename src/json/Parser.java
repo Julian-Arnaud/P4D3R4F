@@ -167,7 +167,7 @@ public class Parser {
         String ret = "{";
         ret+=createStatus(status);
         ret+=createError(errors);
-        if (errors.size() != 0) {
+        if (errors.size() == 0) {
             ret += "\"data\": {" + createPeople(persons) + "}";
         }else{
             ret += "\"data\": {}";

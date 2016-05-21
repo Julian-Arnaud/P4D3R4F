@@ -1,4 +1,4 @@
-package rmi;
+package rmi.exception;
 
 /**
  * Created by guillaume on 18/05/16.
