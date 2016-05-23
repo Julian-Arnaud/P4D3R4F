@@ -4,7 +4,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-
+/**
+ * @author Alain Defrance
+ */
 public class RMIHandler implements InvocationHandler {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;

@@ -1,6 +1,9 @@
 package rmi;
 
 import java.io.Serializable;
+/**
+ * @author Alain Defrance
+ */
 public class InvocationContext implements Serializable {
     private Object[] args;
     private String method;
