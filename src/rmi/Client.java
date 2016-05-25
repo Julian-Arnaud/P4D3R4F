@@ -22,6 +22,8 @@ public class Client {
 
             System.out.println(stub.interest(0));
 
+            System.out.println(stub.close());
+
 
         } catch (Exception e) {
             e.printStackTrace();

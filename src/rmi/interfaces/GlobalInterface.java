@@ -13,6 +13,6 @@ public interface GlobalInterface extends Remote {
     public String interest(int id) throws RemoteException;
     public String join(String name, String email, int id) throws RemoteException;
     public String list() throws RemoteException;
-
+    public String close() throws RemoteException;
 
 }

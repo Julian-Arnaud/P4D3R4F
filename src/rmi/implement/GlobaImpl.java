@@ -2,12 +2,12 @@ package rmi.implement;
 
 import rmi.interfaces.GlobalInterface;
 
+import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-import static rmi.Server.d;
-import static rmi.Server.p;
+import static rmi.Server.*;
 
 /**
  * Created by guillaume on 23/05/16.
@@ -36,5 +36,11 @@ public class GlobaImpl implements GlobalInterface{
     }
     public String list() throws RemoteException{
         return p.createResponseList("OK", d, new ArrayList<String>() );
+    }
+
+    public String close() throws RemoteException{
+        closed = true;
+        System.out.println("close close");
+        return "{\"status\": \"OK\", \"errors\": [], \"data\": {}}";
     }
 }

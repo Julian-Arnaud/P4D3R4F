@@ -3,6 +3,7 @@ package rmi;
 import rmi.exception.InvalidStateException;
 import rmi.exception.RMIInvocationException;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Proxy;
@@ -91,5 +92,9 @@ public class Registry {
             classes.add(o.getClass());
         }
         return classes.toArray(new Class[]{});
+    }
+
+    public void closeSockets() throws IOException {
+        this.server.close();
     }
 }
